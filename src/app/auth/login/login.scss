@@ -1,0 +1,57 @@
+form {
+  max-width: 400px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #03d3e2;
+  border-radius: 10px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  div {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #f8075f; 
+    }
+
+    input {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid #04f90c;
+      border-radius: 5px;
+      background-color: #f8f1f1;
+      color: #130c0c;
+      font-size: 1rem;
+
+     
+    }
+
+    small {
+      color: #f44336; 
+      margin-top: 0.25rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  button {
+    padding: 0.75rem;
+    background-color: #04fa0c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    
+
+  }
+
+  div[ngIf] {
+    margin-top: 1rem;
+    color: #81c784;
+    font-weight: bold;
+    text-align: center;
+  }
+}

@@ -1,0 +1,79 @@
+<div class="edit-trainee-container">
+  <h2>Edit Trainee</h2>
+  <form [formGroup]="traineeForm" (ngSubmit)="updateTrainee()">
+    <div class="form-group">
+      <label for="employeeName">Employee Name</label>
+      <input 
+        id="employeeName"
+        type="text"
+        formControlName="EmployeeName"
+        placeholder="Enter employee name"
+        [class.invalid]="traineeForm.get('EmployeeName')?.invalid && traineeForm.get('EmployeeName')?.touched">
+      <span class="error" *ngIf="traineeForm.get('EmployeeName')?.invalid && traineeForm.get('EmployeeName')?.touched">
+        Employee name is required
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="trainingName">Training Name</label>
+      <select 
+        id="trainingName"
+        formControlName="TrainingName"
+        [class.invalid]="traineeForm.get('TrainingName')?.invalid && traineeForm.get('TrainingName')?.touched">
+        <option value="" disabled>Select training</option>
+        <option value="Angular">Angular</option>
+        <option value="Node js">Node js</option>
+        <option value="Express js">Express js</option>
+        <option value="MongoDB">MongoDB</option>
+      </select>
+      <span class="error" *ngIf="traineeForm.get('TrainingName')?.invalid && traineeForm.get('TrainingName')?.touched">
+        Training name is required
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="startDate">Start Date</label>
+      <input 
+        id="startDate"
+        type="date"
+        formControlName="StartDate"
+        [class.invalid]="traineeForm.get('StartDate')?.invalid && traineeForm.get('StartDate')?.touched">
+      <span class="error" *ngIf="traineeForm.get('StartDate')?.invalid && traineeForm.get('StartDate')?.touched">
+        Start date is required
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="endDate">End Date</label>
+      <input 
+        id="endDate"
+        type="date"
+        formControlName="EndDate">
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select 
+        id="status"
+        formControlName="Status"
+        [class.invalid]="traineeForm.get('Status')?.invalid && traineeForm.get('Status')?.touched">
+        <option value="" disabled>Select status</option>
+        <option value="Pending">Pending</option>
+        <option value="Ongoing">Ongoing</option>
+        <option value="Completed">Completed</option>
+      </select>
+      <span class="error" *ngIf="traineeForm.get('Status')?.invalid && traineeForm.get('Status')?.touched">
+        Status is required
+      </span>
+    </div>
+
+    <div class="button-group">
+      <button type="submit" class="btn-primary" [disabled]="traineeForm.invalid">
+        Update Trainee
+      </button>
+      <button type="button" class="btn-secondary" routerLink="/traineelist">
+        Cancel
+      </button>
+    </div>
+  </form>
+</div>

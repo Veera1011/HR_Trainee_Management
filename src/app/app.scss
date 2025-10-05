@@ -1,0 +1,45 @@
+nav {
+  background-color: #0f2ede;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .nav-left {
+    flex: 1; 
+  }
+
+  .nav-center {
+    flex: 1;
+    text-align: center;
+    color: #f9f9f9;
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+
+  .nav-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+
+    a {
+      color: #f91303;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      background-color: beige;
+    }
+
+    button {
+      color: #0338f9;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      background-color: rgb(247, 5, 5);
+      border: none;
+      cursor: pointer;
+    }
+  }
+}
