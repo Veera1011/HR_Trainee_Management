@@ -7,12 +7,13 @@ import { authGuard } from './auth/auth-guard';
 import { Home } from './home/home';
 import { TraineeList } from './trainee/trainee-list/trainee-list';
 import { EditTrainee } from './trainee/edit-trainee/edit-trainee';
+import { Parenttrainee } from './trainee/parenttrainee/parenttrainee';
 
 const routes: Routes = [
   {path:'',component:Home},
   {path:'login',component:Login},
   {path:'register',component:Register},
-  {path:'trainee',component:Traineeform,canActivate:[authGuard]},
+  {path:'trainee',component:Parenttrainee,canActivate:[authGuard]},
   {path:'traineelist',component:TraineeList,canActivate:[authGuard]},
    {path:'edit/:id',component:EditTrainee,canActivate:[authGuard]}
 ];

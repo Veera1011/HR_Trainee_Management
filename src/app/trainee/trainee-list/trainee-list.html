@@ -17,10 +17,10 @@
         <td>{{ trainee.TrainingName }}</td>
         <td>{{ trainee.StartDate | date:'shortDate' }}</td>
         <td>{{ trainee.EndDate ? (trainee.EndDate | date:'shortDate') : 'Not Given' }}</td>
-        <td>{{ trainee.Status }}</td>
+        <td [appStatus]="(trainee.Status).toLowerCase()">{{ trainee.Status }}</td>
        <td>
-  <button type="button" [routerLink]="['/edit', trainee._id]">Edit</button>
-  <button type="button" (click)="deleteTrainee(trainee.EmployeeName)">Delete</button>
+  <button  type="button" [routerLink]="['/edit', trainee._id]">Edit</button>
+  <button  type="button" (click)="deleteTrainee(trainee.EmployeeName)">Delete</button>
 </td>
 
       </tr>
@@ -29,3 +29,69 @@
 </div>
 
 <h1 *ngIf="trainees.length===0">No Trainees found</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <form (ngSubmit)="getstatuscount(selected)">
+  <select name="selected" [(ngModel)]="selected">
+    <option *ngFor="let t of value" value="{{t}}">{{t}}</option>
+  </select>
+  <button type="submit">filter</button>
+</form>
+
+<h1>{{statuscount}}</h1> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h2>Student Trainings</h2>
+
+<table border="1" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Student</th>
+      <th>Trainings</th>
+      <th>Total Trainings</th>
+     
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let student of (dup | keyvalue)">
+      <td>{{ student.key }}</td>
+      <td>{{ student.value.train.join(', ') }}</td>
+      <td>{{ student.value.count }}</td>
+      
+    </tr>
+  </tbody>
+</table> -->

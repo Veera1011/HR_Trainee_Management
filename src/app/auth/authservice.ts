@@ -29,6 +29,10 @@ export class Authservice {
     return localStorage.getItem('isloggedin')
   }
 
+  currentUser(){
+    return JSON.parse(localStorage.getItem('currentuser') || '');
+  }
+
   logout(){
     localStorage.removeItem('isloggedin');
     localStorage.removeItem('currentuser');

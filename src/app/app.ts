@@ -11,6 +11,7 @@ export class App implements DoCheck {
   protected readonly title = signal('HR_Trainee_Management');
 
   show:boolean=false;
+ 
 
   constructor(private authservice:Authservice){}
 
@@ -18,8 +19,12 @@ ngDoCheck(): void {
 
   this.show=Boolean(this.authservice.isloggedin());
 
+  
+
     
 }
+
+
 
   logoutuser(){
   this.authservice.logout();

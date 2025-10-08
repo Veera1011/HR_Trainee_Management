@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Traineeservice } from '../traineeservice';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscriber, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-traineeform',
@@ -8,14 +9,22 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   templateUrl: './traineeform.html',
   styleUrl: './traineeform.scss'
 })
-export class Traineeform implements OnInit {
+export class Traineeform implements OnInit,OnChanges,AfterViewInit,AfterViewChecked,AfterContentInit,AfterContentChecked,OnDestroy {
 
   traineeform!:FormGroup;
   responsemessage:any='';
-  trainings=['Angular', 'Node js', 'Express js', 'MongoDB']
+  @Input() trainings:string[]=[];
+  @Input() status:string[]=[];
+  @Output() formsubmit= new EventEmitter<any>();
+  private subscribers=new Subscription();
 
 
   constructor(private traineeservice:Traineeservice,private fb:FormBuilder){}
+
+  ngOnChanges(changes: SimpleChanges): void {
+      console.log('input property changed'+ ' ' +JSON.stringify(changes));
+      
+  }
 
   ngOnInit(): void {
       this.traineeform=this.fb.group({
@@ -27,6 +36,22 @@ export class Traineeform implements OnInit {
 
       });
   }
+ngAfterContentInit(): void {
+    console.log('external content from parent is rendered')
+}
+
+ngAfterContentChecked(): void {
+    console.log('the external content is changed');
+    
+}
+
+ngAfterViewInit(): void {
+    console.log('after trainee form template is rendered')
+}
+
+ngAfterViewChecked(): void {
+    console.log('checking any update in traineeform template')
+}
 
 addTrainee(){
   if(this.traineeform.valid){
@@ -36,17 +61,21 @@ addTrainee(){
       EndDate: this.traineeform.value.EndDate ? new Date(this.traineeform.value.EndDate) : null
     };
     
-    this.traineeservice.addTrainee(formData).subscribe({
+   this.subscribers.add(this.traineeservice.addTrainee(formData).subscribe({
       next:(response)=>{
         this.responsemessage=response;
-        alert(JSON.stringify(this.responsemessage.message))
+       
         this.traineeform.reset();
+         this.formsubmit.emit(response);
       },
       error:(error)=>{console.error(error)}
-    })
+    }));
   }
 }
 
+ngOnDestroy(): void {
+    this.subscribers.unsubscribe();
+}
 
 
 }
