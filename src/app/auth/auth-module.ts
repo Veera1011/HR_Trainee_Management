@@ -6,13 +6,15 @@ import { provideHttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TraineeModule } from '../trainee/trainee-module';
 import { authGuard } from './auth-guard';
+import { OauthCallback } from './oauth-callback/oauth-callback';
 
 
 
 @NgModule({
   declarations: [
     Login,
-    Register
+    Register,
+    OauthCallback
   ],
   imports: [
     CommonModule,

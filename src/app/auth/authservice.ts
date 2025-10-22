@@ -24,6 +24,19 @@ export class Authservice {
   loginUser(user:User):Observable<User>{
     return this.http.post<User>(`${this.baseurl}/login`,user)
   }
+
+
+  loginWithGoogle() {
+    window.location.href = `${this.baseurl}/google`;
+  }
+
+
+  handleOAuthCallback(token: string, email: string) {
+    localStorage.setItem('isloggedin', JSON.stringify(true));
+    localStorage.setItem('currentuser', JSON.stringify(email));
+    localStorage.setItem('authToken', token);
+    this.router.navigate(['/trainee']);
+  }
   
   isloggedin(){
     return localStorage.getItem('isloggedin')
@@ -33,10 +46,15 @@ export class Authservice {
     return JSON.parse(localStorage.getItem('currentuser') || '');
   }
 
-  logout(){
+  
+  getAuthToken() {
+    return localStorage.getItem('authToken');
+  }
+
+  logout() {
     localStorage.removeItem('isloggedin');
     localStorage.removeItem('currentuser');
+    localStorage.removeItem('authToken'); 
     this.router.navigate(['/'])
-
   }
 }

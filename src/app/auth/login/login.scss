@@ -1,4 +1,4 @@
-form {
+.form {
   max-width: 400px;
   margin: 3rem auto;
   padding: 2rem;
@@ -9,17 +9,17 @@ form {
   flex-direction: column;
   gap: 1.5rem;
 
-  div {
+  .div {
     display: flex;
     flex-direction: column;
 
-    label {
+    .label {
       margin-bottom: 0.5rem;
       font-weight: bold;
       color: #f8075f; 
     }
 
-    input {
+    .input {
       padding: 0.5rem 0.75rem;
       border: 1px solid #04f90c;
       border-radius: 5px;
@@ -30,14 +30,14 @@ form {
      
     }
 
-    small {
+    .small {
       color: #f44336; 
       margin-top: 0.25rem;
       font-size: 0.85rem;
     }
   }
 
-  button {
+  .button {
     padding: 0.75rem;
     background-color: #04fa0c;
     color: #fff;
@@ -48,10 +48,59 @@ form {
 
   }
 
-  div[ngIf] {
+  .div[ngIf] {
     margin-top: 1rem;
     color: #81c784;
     font-weight: bold;
     text-align: center;
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1rem 0;
+  
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  
+  span {
+    padding: 0 0.75rem;
+    color: #fff;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+}
+
+.google-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background-color: #fff;
+  color: #333;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: #f8f9fa;
+    border-color: #4285F4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
   }
 }

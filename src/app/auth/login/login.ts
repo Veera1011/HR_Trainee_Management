@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Authservice } from '../authservice';
-import {  Router } from '@angular/router';
-
+import { Router } from '@angular/router';
+import formConfig from './loginform.json';
 
 @Component({
   selector: 'app-login',
@@ -12,37 +12,65 @@ import {  Router } from '@angular/router';
 })
 export class Login implements OnInit {
 
-  loginForm!:FormGroup;
-  response:any='';
+  loginForm!: FormGroup;
+  formConfig: any;
+  response: any = '';
 
-  constructor(private authservice:Authservice,private fb:FormBuilder,private router:Router){}
+  constructor(
+    private fb: FormBuilder,
+    private authservice: Authservice,
+    private router: Router
+  ) { }
 
-ngOnInit(): void {
-     this.loginForm=this.fb.group({
-      email:['',[Validators.required,Validators.email]],
-      password:['',Validators.required]
-})}
+  ngOnInit(): void {
 
-login(){
+    
 
-if(this.loginForm.valid){
-  const {email,password}=this.loginForm.value;
-  this.authservice.loginUser({email,password}).subscribe({
-    next:(response)=>{
-      let loggedin=true;
-      this.response=response;
-      localStorage.setItem('currentuser',JSON.stringify(this.response.data.email));
-      localStorage.setItem('isloggedin',JSON.stringify(loggedin))
-      if(this.response.success){
-        this.router.navigate(['/trainee'])
+    this.formConfig = formConfig;
+
+    const formGroup: any = {};
+    this.formConfig.controls.forEach((field: any) => {
+      const valid = [];
+
+      if (field.validators?.includes('required')) {
+        valid.push(Validators.required);
       }
-    },
-    error:(error)=>{this.response=error}
-  })
+      if (field.validators?.includes('email')) {
+        valid.push(Validators.email);
+      }
 
-}
-}
+      formGroup[field.formControlName] = ['', valid];
+      console.log('before assigniing', formGroup);
+
+    });
+      console.log('after assigniing', formGroup);
 
 
+    this.loginForm = this.fb.group(formGroup);
+  }
 
+  login(): void {
+    if (this.loginForm.valid) {
+      console.log(this.loginForm);
+
+      const { email, password } = this.loginForm.value;
+      console.log(email, password);
+
+      this.authservice.loginUser({ email, password }).subscribe({
+        next: (response) => {
+          this.response = response;
+          localStorage.setItem('currentuser', JSON.stringify(this.response.data.email));
+          localStorage.setItem('isloggedin', JSON.stringify(true));
+          if (this.response.success) {
+            this.router.navigate(['/trainee']);
+          }
+        },
+        error: (error) => this.response = error
+      });
+    }
+  }
+
+   loginWithGoogle() {
+    this.authservice.loginWithGoogle();
+  }
 }

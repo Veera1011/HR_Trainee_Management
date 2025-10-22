@@ -1,5 +1,25 @@
 <div class="trainee-table">
   <h2>Trainees List</h2>
+  <div class="search">
+  <div class="input-group">
+    <input #searchname type="text" name="name" [(ngModel)]="name" placeholder="Search by Name" (ngModelChange)="filter()">
+  </div>
+
+  <div class="input-group">
+    <input #but1 type="date" name="sd" [(ngModel)]="sd" (ngModelChange)="filterbydate()">
+    <span class="error" *ngIf="sdRequired">*required</span>
+  </div>
+
+  <div class="input-group">
+    <input #but2 type="date" name="ed" [(ngModel)]="ed" (ngModelChange)="filterbydate()">
+    <span class="error" *ngIf="edRequired">*required</span>
+  </div>
+
+  <button type="reset" (click)="clear()">Clear</button>
+</div>
+
+  
+
   <table *ngIf="trainees.length!=0">
     <thead>
       <tr>

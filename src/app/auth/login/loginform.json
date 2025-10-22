@@ -1,0 +1,32 @@
+{
+  "controls": [
+    {
+      "type": "email",
+      "label": "Email",
+      "formControlName": "email",
+      "placeholder": "Enter your email",
+      "validators": ["required", "email"]
+    },
+    {
+      "type": "password",
+      "label": "Password",
+      "formControlName": "password",
+      "placeholder": "Enter your password",
+      "validators": ["required"]
+    }
+  ],
+  "buttons": [
+    {
+      "type": "submit",
+      "text": "Login"
+    }
+  ],
+  "styles":{
+    "form":"form",
+     "div":"div",
+     "button":"button",
+     "label":"label",
+     "input":"input",
+     "small":"small"
+  }
+}
