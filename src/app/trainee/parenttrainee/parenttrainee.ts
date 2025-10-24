@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-parenttrainee',
@@ -13,8 +14,14 @@ export class Parenttrainee {
   childres=''
 
   traineeform(response:any){
+
+    Swal.fire({
+      title:'Added',
+      text:'Message from Child Component' + ' ' + `${response.message}`,
+      icon:'success'
+    })
     
-    alert('Message from Child Component' + ' ' + `${response.message}`);
+    
     this.childres= `${response.message}`
   }
 

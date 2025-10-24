@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Authservice } from '../authservice';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,7 @@ export class Register implements OnInit {
   registerForm!: FormGroup;
   response: any = '';
 
-  constructor(private authservice: Authservice, private fb: FormBuilder) {}
+  constructor(private authservice: Authservice, private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group(
@@ -22,7 +23,7 @@ export class Register implements OnInit {
         password: ['', Validators.required],
         confirmpassword: ['', Validators.required]
       },
-      { validators: this.passwordMatchValidator } 
+      { validators: this.passwordMatchValidator }
     );
   }
 
@@ -33,12 +34,33 @@ export class Register implements OnInit {
   }
 
   register() {
-    if (this.registerForm.valid) {
-      const { email, password } = this.registerForm.value;
-      this.authservice.registerUser({ email, password }).subscribe({
-        next: (response) => { this.response = response; },
-        error: (error) => { this.response = error; }
-      });
-    }
+    Swal.fire({
+      title: 'Register',
+      text: 'Do You Want to Register',
+      icon: 'question',
+      showConfirmButton: true,
+      showCancelButton: true,
+      confirmButtonColor: 'green',
+      confirmButtonText: 'Register'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (this.registerForm.valid) {
+          const { email, password } = this.registerForm.value;
+          this.authservice.registerUser({ email, password }).subscribe({
+            next: (response) => {
+              Swal.fire({
+                title: 'Register',
+                text: 'Registered Successfully',
+                icon: 'success',
+              })
+              this.response = response;
+            },
+            error: (error) => { this.response = error; }
+          });
+        }
+      }
+
+    })
+
   }
 }

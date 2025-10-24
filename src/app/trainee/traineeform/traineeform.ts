@@ -2,6 +2,7 @@ import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit,
 import { Traineeservice } from '../traineeservice';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscriber, Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-traineeform',
@@ -61,7 +62,18 @@ addTrainee(){
       EndDate: this.traineeform.value.EndDate ? new Date(this.traineeform.value.EndDate) : null
     };
     
-   this.subscribers.add(this.traineeservice.addTrainee(formData).subscribe({
+
+    Swal.fire({
+      title:'Add the Trainee',
+      text:'Do You want to add?',
+      showCancelButton:true,
+      confirmButtonColor:'green',
+      confirmButtonText:'Add',
+      reverseButtons:true,
+      icon:'question'
+    }).then((result)=>{
+      if(result.isConfirmed){
+        this.subscribers.add(this.traineeservice.addTrainee(formData).subscribe({
       next:(response)=>{
         this.responsemessage=response;
        
@@ -70,6 +82,9 @@ addTrainee(){
       },
       error:(error)=>{console.error(error)}
     }));
+      }
+    })
+   
   }
 }
 

@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Traineeservice, Trainee } from '../traineeservice';
 import {  map } from 'rxjs';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -46,15 +47,34 @@ export class TraineeList implements OnInit,AfterViewInit {
   }
 
   deleteTrainee(name:string){
-    this.traineeservice.deletebyname(name).subscribe({
+    Swal.fire({
+      title:"Are You sure",
+      text:'you cannot undo',
+      showCancelButton:true,
+      confirmButtonColor:'red',
+      confirmButtonText:'delete',
+      icon:'warning'
+    }).then((result)=>{
+
+      if(result.isConfirmed){
+         this.traineeservice.deletebyname(name).subscribe({
       next:(response) => {
         this.response=response;
-        alert(this.response.message);
+        Swal.fire({
+          title:'Delete',
+          text:this.response.message,
+          icon:'success'
+        })
+        
         this.loadTrainees();
       },
       error:(error) => {console.error(error)}
 
     })
+      }
+
+    })
+   
 
   }
 

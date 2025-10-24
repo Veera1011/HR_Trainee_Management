@@ -21,6 +21,7 @@ export class OauthCallback {
     this.route.queryParams.subscribe(params => {
       const token = params['token'];
       const email = params['email'];
+      const picture = params['picture'];
       const error = params['error'];
 
       if (error) {
@@ -30,9 +31,9 @@ export class OauthCallback {
       }
 
       if (token && email) {
-        this.authservice.handleOAuthCallback(token, email);
+        this.authservice.handleOAuthCallback(token, email,picture);
       } else {
-        alert('Invalid authentication response');
+        alert('error');
         window.location.href = '/';
       }
     });

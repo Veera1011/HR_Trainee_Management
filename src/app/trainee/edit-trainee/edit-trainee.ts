@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Traineeservice, Trainee } from '../traineeservice';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-trainee',
@@ -63,7 +64,11 @@ updateTrainee() {
   
   this.traineeService.updateTrainee(this.traineeId, updatedTrainee)
     .subscribe(() => {
-      alert('Trainee updated successfully');
+      Swal.fire({
+        title:'Updated',
+        text:"Trainee Updated Successfully",
+        icon:'success'
+      })
       this.router.navigate(['/traineelist']);
     });
 }
