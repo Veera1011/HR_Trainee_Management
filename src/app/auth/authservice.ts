@@ -57,6 +57,7 @@ export class Authservice {
     Swal.fire({
       title: 'Logout',
       text: 'Do You Want to Logout?',
+      theme: 'material-ui-light',
       icon: 'question',
       showConfirmButton: true,
       showCancelButton: true,
@@ -72,8 +73,9 @@ export class Authservice {
         Swal.fire({
           title: 'Logged Out',
           text: 'Logged out Successfully',
+          theme:'material-ui-light',
           icon: 'success',
-          timer:2000
+          timer: 2000
         })
       }
 

@@ -9,20 +9,21 @@ import Swal from 'sweetalert2';
 })
 export class Parenttrainee {
 
-  trainings=['Angular', 'Node js', 'Express js', 'MongoDB']
-  status=['Pending','Ongoing','Completed']
-  childres=''
+  trainings = ['Angular', 'Node js', 'Express js', 'MongoDB']
+  status = ['Pending', 'Ongoing', 'Completed']
+  childres = ''
 
-  traineeform(response:any){
+  traineeform(response: any) {
 
     Swal.fire({
-      title:'Added',
-      text:'Message from Child Component' + ' ' + `${response.message}`,
-      icon:'success'
+      title: 'Added',
+      text: 'Message from Child Component' + ' ' + `${response.message}`,
+      icon: 'success',
+      theme: 'material-ui-light',
     })
-    
-    
-    this.childres= `${response.message}`
+
+
+    this.childres = `${response.message}`
   }
 
 }

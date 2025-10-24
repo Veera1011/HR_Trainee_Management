@@ -50,6 +50,7 @@ export class TraineeList implements OnInit,AfterViewInit {
     Swal.fire({
       title:"Are You sure",
       text:'you cannot undo',
+      theme:'material-ui-light',
       showCancelButton:true,
       confirmButtonColor:'red',
       confirmButtonText:'delete',
@@ -63,6 +64,7 @@ export class TraineeList implements OnInit,AfterViewInit {
         Swal.fire({
           title:'Delete',
           text:this.response.message,
+          theme:'material-ui-light',
           icon:'success'
         })
         

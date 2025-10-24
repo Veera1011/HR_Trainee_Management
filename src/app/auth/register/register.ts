@@ -37,6 +37,7 @@ export class Register implements OnInit {
     Swal.fire({
       title: 'Register',
       text: 'Do You Want to Register',
+      theme: 'material-ui-light',
       icon: 'question',
       showConfirmButton: true,
       showCancelButton: true,
@@ -51,6 +52,7 @@ export class Register implements OnInit {
               Swal.fire({
                 title: 'Register',
                 text: 'Registered Successfully',
+                theme: 'material-ui-light',
                 icon: 'success',
               })
               this.response = response;
