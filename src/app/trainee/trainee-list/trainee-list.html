@@ -39,7 +39,7 @@
         <td>{{ trainee.EndDate ? (trainee.EndDate | date:'shortDate') : 'Not Given' }}</td>
         <td [appStatus]="(trainee.Status).toLowerCase()">{{ trainee.Status }}</td>
        <td>
-  <button  type="button" [routerLink]="['/edit', trainee._id]">Edit</button>
+  <button  type="button" [routerLink]="['/traineem/edit', trainee._id]">Edit</button>
   <button  type="button" (click)="deleteTrainee(trainee.EmployeeName)">Delete</button>
 </td>
 

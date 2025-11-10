@@ -9,6 +9,16 @@ export interface User {
   password: string
 }
 
+export interface AuthResponse {
+  success: boolean;
+  message: string;
+  data: {
+    id: string;
+    email: string;
+    token: string;
+  }
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,8 +32,8 @@ export class Authservice {
     return this.http.post<User>(`${this.baseurl}/register`, user)
   }
 
-  loginUser(user: User): Observable<User> {
-    return this.http.post<User>(`${this.baseurl}/login`, user)
+  loginUser(user: User): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.baseurl}/login`, user)
   }
 
 
@@ -32,12 +42,11 @@ export class Authservice {
   }
 
 
-  handleOAuthCallback(token: string, email: string, picture: string) {
+  handleOAuthCallback(token: string, email: string) {
     localStorage.setItem('isloggedin', JSON.stringify(true));
     localStorage.setItem('currentuser', JSON.stringify(email));
-    localStorage.setItem('authToken', token);
-    localStorage.setItem('picture', JSON.stringify(picture));
-    this.router.navigate(['/trainee']);
+    localStorage.setItem('authToken',JSON.stringify(token) );
+   setTimeout(()=>{this.router.navigate(['/traineem']);},2000) 
   }
 
   isloggedin() {
@@ -50,7 +59,14 @@ export class Authservice {
 
 
   getAuthToken() {
-    return localStorage.getItem('authToken');
+    return JSON.parse(localStorage.getItem('authToken') || 'null');
+  }
+
+   clearAuthData() {
+    localStorage.removeItem('isloggedin');
+    localStorage.removeItem('currentuser');
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('picture');
   }
 
   logout() {

@@ -5,13 +5,17 @@ import { provideHttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TraineeList } from './trainee-list/trainee-list';
 import { EditTrainee } from './edit-trainee/edit-trainee';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterModule, Routes } from '@angular/router';
 import { Parenttrainee } from './parenttrainee/parenttrainee';
 import { Status } from './status';
 import { StatuspipePipe } from './statuspipe-pipe';
 
 
-
+const routes:Routes=[
+   {path:'',component:Parenttrainee},
+    {path:'traineelist',component:TraineeList},
+     {path:'edit/:id',component:EditTrainee}
+]
 
 
 @NgModule({
@@ -29,7 +33,9 @@ import { StatuspipePipe } from './statuspipe-pipe';
     ReactiveFormsModule,
     FormsModule,
     DatePipe,
-    RouterLink
+    RouterLink,
+    RouterModule.forChild(routes)
+    
   ],
   providers:[
     provideHttpClient()

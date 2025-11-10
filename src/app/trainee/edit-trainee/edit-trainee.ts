@@ -70,7 +70,7 @@ export class EditTrainee implements OnInit {
           theme: 'material-ui-light',
           icon: 'success'
         })
-        this.router.navigate(['/traineelist']);
+        this.router.navigate(['/traineem/traineelist']);
       });
   }
 

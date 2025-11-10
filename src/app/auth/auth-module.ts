@@ -19,7 +19,7 @@ import { OauthCallback } from './oauth-callback/oauth-callback';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TraineeModule
+  
   ],
   exports:[Login,Register],
   providers:[

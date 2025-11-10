@@ -61,8 +61,9 @@ export class Login implements OnInit {
           this.response = response;
           localStorage.setItem('currentuser', JSON.stringify(this.response.data.email));
           localStorage.setItem('isloggedin', JSON.stringify(true));
+          localStorage.setItem('authToken',JSON.stringify(this.response.data.token))
           if (this.response.success) {
-            this.router.navigate(['/trainee']);
+            this.router.navigate(['/traineem']);
           }
         },
         error: (error) => this.response = error
