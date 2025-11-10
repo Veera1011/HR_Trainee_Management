@@ -32,15 +32,24 @@ export class MultiTraineeForm implements OnInit {
   ngOnInit(): void {
     this.loadEmployees();
     this.loadTrainings();
-    this.addTraineeRow(); // Add initial row
+    this.addTraineeRow();
   }
 
   loadEmployees(): void {
     this.employeeService.getAllEmployees().subscribe({
       next: (response) => {
         this.employees = response.data;
+        console.log('Employees loaded:', this.employees);
       },
-      error: (error) => console.error('Error loading employees:', error)
+      error: (error) => {
+        console.error('Error loading employees:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Failed to load employees',
+          icon: 'error',
+          theme: 'material-ui-light'
+        });
+      }
     });
   }
 
@@ -48,8 +57,17 @@ export class MultiTraineeForm implements OnInit {
     this.trainingService.getAllTrainings().subscribe({
       next: (response) => {
         this.allTrainings = response.data;
+        console.log('Trainings loaded:', this.allTrainings);
       },
-      error: (error) => console.error('Error loading trainings:', error)
+      error: (error) => {
+        console.error('Error loading trainings:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Failed to load trainings',
+          icon: 'error',
+          theme: 'material-ui-light'
+        });
+      }
     });
   }
 
@@ -98,7 +116,6 @@ export class MultiTraineeForm implements OnInit {
       this.traineeRows[index].filteredTrainings = [];
     }
     
-    // Reset training selection when stack changes
     this.traineeRows[index].form.patchValue({ trainingCode: '' });
   }
 
@@ -122,14 +139,29 @@ export class MultiTraineeForm implements OnInit {
       return;
     }
 
+    // Format the data properly
     const trainees = this.traineeRows.map(row => {
       const formValue = row.form.value;
-      return {
-        ...formValue,
-        startDate: new Date(formValue.startDate),
-        endDate: formValue.endDate ? new Date(formValue.endDate) : null
+      
+      // Format dates properly - just use the date string as-is
+      const traineeData: any = {
+        employeeId: formValue.employeeId,
+        trainingCode: formValue.trainingCode,
+        startDate: formValue.startDate,
+        status: formValue.status,
+        completionPercentage: formValue.completionPercentage || 0,
+        remarks: formValue.remarks || ''
       };
+
+      // Only add endDate if it has a value
+      if (formValue.endDate) {
+        traineeData.endDate = formValue.endDate;
+      }
+
+      return traineeData;
     });
+
+    console.log('Submitting trainees:', trainees);
 
     Swal.fire({
       title: 'Submit Trainees',
@@ -143,16 +175,24 @@ export class MultiTraineeForm implements OnInit {
       if (result.isConfirmed) {
         this.traineeService.createMultipleTrainees(trainees).subscribe({
           next: (response) => {
+            console.log('Backend response:', response);
+            
             const successCount = response.data.success.length;
             const failedCount = response.data.failed.length;
 
             let message = `Successfully added ${successCount} trainee(s)`;
             if (failedCount > 0) {
               message += `\n${failedCount} failed due to duplicates or errors`;
+              
+              // Show details of failed entries
+              const failedDetails = response.data.failed
+                .map((f: any) => `- ${f.reason}`)
+                .join('\n');
+              message += '\n\nFailed entries:\n' + failedDetails;
             }
 
             Swal.fire({
-              title: 'Success',
+              title: successCount > 0 ? 'Success' : 'Warning',
               text: message,
               icon: successCount > 0 ? 'success' : 'warning',
               theme: 'material-ui-light'
@@ -161,16 +201,12 @@ export class MultiTraineeForm implements OnInit {
             if (successCount > 0) {
               this.resetAll();
             }
-
-            // Show failed entries if any
-            if (failedCount > 0) {
-              console.log('Failed entries:', response.data.failed);
-            }
           },
           error: (error) => {
+            console.error('Error response:', error);
             Swal.fire({
               title: 'Error',
-              text: 'Error adding trainees: ' + error.message,
+              text: error.error?.message || 'Error adding trainees: ' + error.message,
               icon: 'error',
               theme: 'material-ui-light'
             });

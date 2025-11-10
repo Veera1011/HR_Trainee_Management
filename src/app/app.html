@@ -8,8 +8,9 @@
     <a *ngIf="!show" routerLink="login">Login</a>
     <a *ngIf="!show" routerLink="register">Register</a>
     <a *ngIf="show" routerLink="traineem">Add Trainee</a>
-    <a *ngIf="show" routerLink="manage">Manage Employee and Training</a>
     <a *ngIf="show" routerLink="traineem/traineelist">Trainee List</a>
+    <a *ngIf="show" routerLink="manage/employees">Manage Employees</a>
+    <a *ngIf="show" routerLink="manage/trainings">Manage Trainings</a>
     <button *ngIf="show" (click)="logoutuser()">Logout</button>
   </div>
 </nav>
