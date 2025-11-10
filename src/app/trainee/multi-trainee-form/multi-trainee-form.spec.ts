@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Traineeform } from './traineeform';
+import { MultiTraineeForm } from './multi-trainee-form';
 
-describe('Traineeform', () => {
-  let component: Traineeform;
-  let fixture: ComponentFixture<Traineeform>;
+describe('MultiTraineeForm', () => {
+  let component: MultiTraineeForm;
+  let fixture: ComponentFixture<MultiTraineeForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [Traineeform]
+      declarations: [MultiTraineeForm]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Traineeform);
+    fixture = TestBed.createComponent(MultiTraineeForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Traineeservice, Trainee } from '../traineeservice';
+import { TraineeService, Trainee } from '../traineeservice';
 import {  map } from 'rxjs';
 import Swal from 'sweetalert2';
 
@@ -26,7 +26,7 @@ export class TraineeList implements OnInit,AfterViewInit {
 
 
 
-  constructor(private traineeservice: Traineeservice) {}
+  constructor(private traineeservice: TraineeService) {}
 
   ngOnInit(): void {
     this.loadTrainees();

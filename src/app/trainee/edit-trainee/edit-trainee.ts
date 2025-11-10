@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Traineeservice, Trainee } from '../traineeservice';
+import { TraineeService, Trainee } from '../traineeservice';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -16,7 +16,7 @@ export class EditTrainee implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private traineeService: Traineeservice,
+    private traineeService: TraineeService,
     private route: ActivatedRoute,
     private router: Router
   ) { }

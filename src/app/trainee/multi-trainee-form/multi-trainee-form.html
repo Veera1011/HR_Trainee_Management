@@ -1,0 +1,110 @@
+<div class="trainee-form-container">
+  <h2>Add Trainees</h2>
+  
+  <div class="form-actions">
+    <button type="button" class="btn-add" (click)="addTraineeRow()">
+      <i class="fa fa-plus"></i> Add Row
+    </button>
+    <button type="button" class="btn-primary" (click)="submitAll()" [disabled]="traineeRows.length === 0">
+      <i class="fa fa-save"></i> Submit All
+    </button>
+    <button type="button" class="btn-secondary" (click)="resetAll()">
+      <i class="fa fa-refresh"></i> Reset All
+    </button>
+  </div>
+
+  <div class="trainee-rows">
+    <div *ngFor="let row of traineeRows; let i = index" class="trainee-row" [formGroup]="row.form">
+      <div class="row-header">
+        <span class="row-number">Trainee #{{ i + 1 }}</span>
+        <button type="button" class="btn-remove" (click)="removeTraineeRow(i)">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Employee</label>
+          <select formControlName="employeeId" 
+                  [class.invalid]="row.form.get('employeeId')?.invalid && row.form.get('employeeId')?.touched">
+            <option value="">Select Employee</option>
+            <option *ngFor="let emp of employees" [value]="emp.employeeId">
+              {{ emp.employeeName }} ({{ emp.employeeId }})
+            </option>
+          </select>
+          <span class="error" *ngIf="row.form.get('employeeId')?.invalid && row.form.get('employeeId')?.touched">
+            Employee is required
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Stack</label>
+          <select (change)="onStackChange(i, $event)" 
+                  [class.invalid]="!row.selectedStack && row.form.get('trainingCode')?.touched">
+            <option value="">Select Stack</option>
+            <option value="MEAN">MEAN</option>
+            <option value="SAP">SAP</option>
+            <option value="CBP">CBP</option>
+            <option value="Functional">Functional</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Training</label>
+          <select formControlName="trainingCode"
+                  [class.invalid]="row.form.get('trainingCode')?.invalid && row.form.get('trainingCode')?.touched">
+            <option value="">Select Training</option>
+            <option *ngFor="let training of row.filteredTrainings" [value]="training.trainingCode">
+              {{ training.trainingName }} ({{ training.duration }} days)
+            </option>
+          </select>
+          <span class="error" *ngIf="row.form.get('trainingCode')?.invalid && row.form.get('trainingCode')?.touched">
+            Training is required
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>Start Date</label>
+          <input type="date" formControlName="startDate"
+                 [class.invalid]="row.form.get('startDate')?.invalid && row.form.get('startDate')?.touched" />
+          <span class="error" *ngIf="row.form.get('startDate')?.invalid && row.form.get('startDate')?.touched">
+            Start date is required
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label>End Date (optional)</label>
+          <input type="date" formControlName="endDate" />
+        </div>
+
+        <div class="form-group">
+          <label>Status</label>
+          <select formControlName="status"
+                  [class.invalid]="row.form.get('status')?.invalid && row.form.get('status')?.touched">
+            <option value="">Select Status</option>
+            <option value="Pending">Pending</option>
+            <option value="Ongoing">Ongoing</option>
+            <option value="Completed">Completed</option>
+          </select>
+          <span class="error" *ngIf="row.form.get('status')?.invalid && row.form.get('status')?.touched">
+            Status is required
+          </span>
+        </div>
+      </div>
+
+      <div class="form-group full-width" *ngIf="row.form.get('status')?.value === 'Completed'">
+        <label>Completion %</label>
+        <input type="number" formControlName="completionPercentage" min="0" max="100" />
+      </div>
+
+      <div class="form-group full-width">
+        <label>Remarks (optional)</label>
+        <textarea formControlName="remarks" rows="2"></textarea>
+      </div>
+    </div>
+
+    <div *ngIf="traineeRows.length === 0" class="empty-state">
+      <p>No trainees added yet. Click "Add Row" to start.</p>
+    </div>
+  </div>
+</div>

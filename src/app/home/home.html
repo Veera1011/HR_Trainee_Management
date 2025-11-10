@@ -1,11 +1,133 @@
-<div class="home">
-  <h1>HR Trainee Management</h1>
-  <p>Welcome to the Trainee Management System.</p>
-  
-  <div class="images">
-    <img class="imh" src="https://c8.alamy.com/comp/F7WRHF/children-under-the-tree-F7WRHF.jpg" alt="Trainee 1">
-     <img src="https://thumbs.dreamstime.com/b/tribal-education-192077377.jpg" alt="Trainee 3">
-    <img src="https://s30383.pcdn.co/wp-content/uploads/2020/12/topic-faculty-active-engaged-students-1.png" alt="Trainee 2">
-   
+<div class="dashboard-container">
+  <h1>HR Trainee Management Dashboard</h1>
+  <p class="welcome-text">Welcome to the Trainee Management System</p>
+
+  <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading dashboard...</p>
+  </div>
+
+  <div *ngIf="!loading && metrics" class="dashboard-content">
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+      <div class="card total">
+        <div class="card-icon">
+          <i class="fa fa-users"></i>
+        </div>
+        <div class="card-content">
+          <h3>{{ metrics.summary.total }}</h3>
+          <p>Total Trainees</p>
+        </div>
+      </div>
+
+      <div class="card pending">
+        <div class="card-icon">
+          <i class="fa fa-clock"></i>
+        </div>
+        <div class="card-content">
+          <h3>{{ metrics.summary.pending }}</h3>
+          <p>Pending</p>
+        </div>
+      </div>
+
+      <div class="card ongoing">
+        <div class="card-icon">
+          <i class="fa fa-spinner"></i>
+        </div>
+        <div class="card-content">
+          <h3>{{ metrics.summary.ongoing }}</h3>
+          <p>Ongoing</p>
+        </div>
+      </div>
+
+      <div class="card completed">
+        <div class="card-icon">
+          <i class="fa fa-check-circle"></i>
+        </div>
+        <div class="card-content">
+          <h3>{{ metrics.summary.completed }}</h3>
+          <p>Completed</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section">
+      <!-- Stack Distribution -->
+      <div class="chart-card">
+        <h2>Stack-wise Distribution</h2>
+        <div class="stack-distribution">
+          <div *ngFor="let stack of metrics.stackDistribution" class="stack-item">
+            <div class="stack-bar">
+              <div class="stack-fill" 
+                   [style.width.%]="(stack.count / metrics.summary.total) * 100"
+                   [class]="'stack-' + stack._id.toLowerCase()">
+              </div>
+            </div>
+            <div class="stack-info">
+              <span class="stack-name">{{ stack._id }}</span>
+              <span class="stack-count">{{ stack.count }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Trainings -->
+      <div class="chart-card">
+        <h2>Top 5 Popular Trainings</h2>
+        <div class="top-trainings">
+          <div *ngFor="let training of metrics.topTrainings; let i = index" class="training-item">
+            <span class="rank">{{ i + 1 }}</span>
+            <div class="training-details">
+              <h4>{{ training.trainingName }}</h4>
+              <span class="badge">{{ training.stack }}</span>
+            </div>
+            <span class="count">{{ training.count }} trainees</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Trainees -->
+    <div class="recent-section">
+      <h2>Recent Trainee Enrollments</h2>
+      <div class="recent-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Trainee ID</th>
+              <th>Employee Name</th>
+              <th>Training</th>
+              <th>Stack</th>
+              <th>Status</th>
+              <th>Start Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let trainee of metrics.recentTrainees">
+              <td>{{ trainee.traineeId }}</td>
+              <td>{{ trainee.employeeId?.employeeName || 'N/A' }}</td>
+              <td>{{ trainee.trainingCode?.trainingName || 'N/A' }}</td>
+              <td>
+                <span class="badge" [class]="'badge-' + trainee.trainingCode?.stack?.toLowerCase()">
+                  {{ trainee.trainingCode?.stack || 'N/A' }}
+                </span>
+              </td>
+              <td>
+                <span class="status-badge" [class]="'status-' + trainee.status?.toLowerCase()">
+                  {{ trainee.status }}
+                </span>
+              </td>
+              <td>{{ trainee.startDate | date:'shortDate' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !metrics" class="error-state">
+    <i class="fa fa-exclamation-circle"></i>
+    <p>Unable to load dashboard data. Please try again later.</p>
   </div>
 </div>

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Traineeform } from './traineeform/traineeform';
 import { provideHttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TraineeList } from './trainee-list/trainee-list';
@@ -9,6 +8,7 @@ import { RouterLink, RouterModule, Routes } from '@angular/router';
 import { Parenttrainee } from './parenttrainee/parenttrainee';
 import { Status } from './status';
 import { StatuspipePipe } from './statuspipe-pipe';
+import { MultiTraineeForm } from './multi-trainee-form/multi-trainee-form';
 
 
 const routes:Routes=[
@@ -20,12 +20,13 @@ const routes:Routes=[
 
 @NgModule({
   declarations: [
-    Traineeform,
+    MultiTraineeForm,
     TraineeList,
     EditTrainee,
     Parenttrainee,
     Status,
-    StatuspipePipe
+    StatuspipePipe,
+    MultiTraineeForm
  
   ],
   imports: [
@@ -40,6 +41,6 @@ const routes:Routes=[
   providers:[
     provideHttpClient()
   ],
-  exports:[Traineeform,TraineeList,EditTrainee,Parenttrainee]
+  exports:[MultiTraineeForm,TraineeList,EditTrainee,Parenttrainee]
 })
 export class TraineeModule { }
