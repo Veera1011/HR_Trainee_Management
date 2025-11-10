@@ -12,7 +12,7 @@ import { MultiTraineeForm } from './multi-trainee-form/multi-trainee-form';
 
 
 const routes:Routes=[
-   {path:'',component:Parenttrainee},
+   {path:'',component:MultiTraineeForm},
     {path:'traineelist',component:TraineeList},
      {path:'edit/:id',component:EditTrainee}
 ]

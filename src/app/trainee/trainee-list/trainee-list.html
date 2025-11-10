@@ -1,117 +1,79 @@
 <div class="trainee-table">
   <h2>Trainees List</h2>
-  <div class="search">
-  <div class="input-group">
-    <input #searchname type="text" name="name" [(ngModel)]="name" placeholder="Search by Name" (ngModelChange)="filter()">
-  </div>
-
-  <div class="input-group">
-    <input #but1 type="date" name="sd" [(ngModel)]="sd" (ngModelChange)="filterbydate()">
-    <span class="error" *ngIf="sdRequired">*required</span>
-  </div>
-
-  <div class="input-group">
-    <input #but2 type="date" name="ed" [(ngModel)]="ed" (ngModelChange)="filterbydate()">
-    <span class="error" *ngIf="edRequired">*required</span>
-  </div>
-
-  <button type="reset" (click)="clear()">Clear</button>
-</div>
-
   
+  <div class="search">
+    <div class="input-group">
+      <input 
+        #searchname 
+        type="text" 
+        name="name" 
+        [(ngModel)]="name" 
+        placeholder="Search by Employee Name" 
+        (ngModelChange)="filter()">
+    </div>
 
-  <table *ngIf="trainees.length!=0">
+    <div class="input-group">
+      <input 
+        #but1 
+        type="date" 
+        name="sd" 
+        [(ngModel)]="sd" 
+        (ngModelChange)="filterbydate()">
+      <span class="error" *ngIf="sdRequired">*Start date required</span>
+    </div>
+
+    <div class="input-group">
+      <input 
+        #but2 
+        type="date" 
+        name="ed" 
+        [(ngModel)]="ed" 
+        (ngModelChange)="filterbydate()">
+      <span class="error" *ngIf="edRequired">*End date required</span>
+    </div>
+
+    <button type="button" (click)="clear()">Clear</button>
+  </div>
+
+  <table *ngIf="trainees.length !== 0">
     <thead>
       <tr>
+        <th>Trainee ID</th>
         <th>Employee Name</th>
         <th>Training Name</th>
+        <th>Stack</th>
         <th>Start Date</th>
         <th>End Date</th>
         <th>Status</th>
+        <th>Completion %</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let trainee of trainees">
-        <td>{{ trainee.EmployeeName }}</td>
-        <td>{{ trainee.TrainingName }}</td>
-        <td>{{ trainee.StartDate | date:'shortDate' }}</td>
-        <td>{{ trainee.EndDate ? (trainee.EndDate | date:'shortDate') : 'Not Given' }}</td>
-        <td [appStatus]="(trainee.Status).toLowerCase()">{{ trainee.Status }}</td>
-       <td>
-  <button  type="button" [routerLink]="['/traineem/edit', trainee._id]">Edit</button>
-  <button  type="button" (click)="deleteTrainee(trainee.EmployeeName)">Delete</button>
-</td>
-
+        <td>{{ trainee.traineeId || 'N/A' }}</td>
+        <td>{{ trainee.employeeId?.employeeName || 'N/A' }}</td>
+        <td>{{ trainee.trainingCode?.trainingName || 'N/A' }}</td>
+        <td>{{ trainee.trainingCode?.stack || 'N/A' }}</td>
+        <td>{{ trainee.startDate | date:'shortDate' }}</td>
+        <td>{{ trainee.endDate ? (trainee.endDate | date:'shortDate') : 'Not Set' }}</td>
+        <td [appStatus]="trainee.status?.toLowerCase()">{{ trainee.status }}</td>
+        <td>{{ trainee.completionPercentage || 0 }}%</td>
+        <td>
+          <button 
+            type="button" 
+            [routerLink]="['/traineem/edit', trainee.traineeId]">
+            Edit
+          </button>
+          <button 
+            type="button" 
+            (click)="deleteTrainee(trainee.traineeId)">
+            Delete
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
+
+  <h1 *ngIf="trainees.length === 0">No Trainees Found</h1>
 </div>
-
-<h1 *ngIf="trainees.length===0">No Trainees found</h1>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <form (ngSubmit)="getstatuscount(selected)">
-  <select name="selected" [(ngModel)]="selected">
-    <option *ngFor="let t of value" value="{{t}}">{{t}}</option>
-  </select>
-  <button type="submit">filter</button>
-</form>
-
-<h1>{{statuscount}}</h1> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <h2>Student Trainings</h2>
-
-<table border="1" cellpadding="8">
-  <thead>
-    <tr>
-      <th>Student</th>
-      <th>Trainings</th>
-      <th>Total Trainings</th>
-     
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let student of (dup | keyvalue)">
-      <td>{{ student.key }}</td>
-      <td>{{ student.value.train.join(', ') }}</td>
-      <td>{{ student.value.count }}</td>
-      
-    </tr>
-  </tbody>
-</table> -->

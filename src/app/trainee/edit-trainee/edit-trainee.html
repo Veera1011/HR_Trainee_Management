@@ -1,33 +1,47 @@
 <div class="edit-trainee-container">
   <h2>Edit Trainee</h2>
   <form [formGroup]="traineeForm" (ngSubmit)="updateTrainee()">
+    
     <div class="form-group">
-      <label for="employeeName">Employee Name</label>
-      <input 
-        id="employeeName"
-        type="text"
-        formControlName="EmployeeName"
-        placeholder="Enter employee name"
-        [class.invalid]="traineeForm.get('EmployeeName')?.invalid && traineeForm.get('EmployeeName')?.touched">
-      <span class="error" *ngIf="traineeForm.get('EmployeeName')?.invalid && traineeForm.get('EmployeeName')?.touched">
-        Employee name is required
+      <label for="employeeId">Employee</label>
+      <select 
+        id="employeeId"
+        formControlName="employeeId"
+        [class.invalid]="traineeForm.get('employeeId')?.invalid && traineeForm.get('employeeId')?.touched">
+        <option value="">Select Employee</option>
+        <option *ngFor="let emp of employees" [value]="emp.employeeId">
+          {{ emp.employeeName }} ({{ emp.employeeId }})
+        </option>
+      </select>
+      <span class="error" *ngIf="traineeForm.get('employeeId')?.invalid && traineeForm.get('employeeId')?.touched">
+        Employee is required
       </span>
     </div>
 
     <div class="form-group">
-      <label for="trainingName">Training Name</label>
-      <select 
-        id="trainingName"
-        formControlName="TrainingName"
-        [class.invalid]="traineeForm.get('TrainingName')?.invalid && traineeForm.get('TrainingName')?.touched">
-        <option value="" disabled>Select training</option>
-        <option value="Angular">Angular</option>
-        <option value="Node js">Node js</option>
-        <option value="Express js">Express js</option>
-        <option value="MongoDB">MongoDB</option>
+      <label for="stack">Stack (Filter Trainings)</label>
+      <select id="stack" (change)="onStackChange($event)">
+        <option value="">All Stacks</option>
+        <option value="MEAN">MEAN</option>
+        <option value="SAP">SAP</option>
+        <option value="CBP">CBP</option>
+        <option value="Functional">Functional</option>
       </select>
-      <span class="error" *ngIf="traineeForm.get('TrainingName')?.invalid && traineeForm.get('TrainingName')?.touched">
-        Training name is required
+    </div>
+
+    <div class="form-group">
+      <label for="trainingCode">Training</label>
+      <select 
+        id="trainingCode"
+        formControlName="trainingCode"
+        [class.invalid]="traineeForm.get('trainingCode')?.invalid && traineeForm.get('trainingCode')?.touched">
+        <option value="">Select Training</option>
+        <option *ngFor="let training of filteredTrainings" [value]="training.trainingCode">
+          {{ training.trainingName }} ({{ training.stack }})
+        </option>
+      </select>
+      <span class="error" *ngIf="traineeForm.get('trainingCode')?.invalid && traineeForm.get('trainingCode')?.touched">
+        Training is required
       </span>
     </div>
 
@@ -36,42 +50,60 @@
       <input 
         id="startDate"
         type="date"
-        formControlName="StartDate"
-        [class.invalid]="traineeForm.get('StartDate')?.invalid && traineeForm.get('StartDate')?.touched">
-      <span class="error" *ngIf="traineeForm.get('StartDate')?.invalid && traineeForm.get('StartDate')?.touched">
+        formControlName="startDate"
+        [class.invalid]="traineeForm.get('startDate')?.invalid && traineeForm.get('startDate')?.touched">
+      <span class="error" *ngIf="traineeForm.get('startDate')?.invalid && traineeForm.get('startDate')?.touched">
         Start date is required
       </span>
     </div>
 
     <div class="form-group">
-      <label for="endDate">End Date</label>
+      <label for="endDate">End Date (optional)</label>
       <input 
         id="endDate"
         type="date"
-        formControlName="EndDate">
+        formControlName="endDate">
     </div>
 
     <div class="form-group">
       <label for="status">Status</label>
       <select 
         id="status"
-        formControlName="Status"
-        [class.invalid]="traineeForm.get('Status')?.invalid && traineeForm.get('Status')?.touched">
-        <option value="" disabled>Select status</option>
+        formControlName="status"
+        [class.invalid]="traineeForm.get('status')?.invalid && traineeForm.get('status')?.touched">
+        <option value="">Select Status</option>
         <option value="Pending">Pending</option>
         <option value="Ongoing">Ongoing</option>
         <option value="Completed">Completed</option>
       </select>
-      <span class="error" *ngIf="traineeForm.get('Status')?.invalid && traineeForm.get('Status')?.touched">
+      <span class="error" *ngIf="traineeForm.get('status')?.invalid && traineeForm.get('status')?.touched">
         Status is required
       </span>
+    </div>
+
+    <div class="form-group" *ngIf="traineeForm.get('status')?.value === 'Completed'">
+      <label for="completionPercentage">Completion %</label>
+      <input 
+        id="completionPercentage"
+        type="number"
+        formControlName="completionPercentage"
+        min="0"
+        max="100">
+    </div>
+
+    <div class="form-group">
+      <label for="remarks">Remarks (optional)</label>
+      <textarea 
+        id="remarks"
+        formControlName="remarks"
+        rows="3"></textarea>
     </div>
 
     <div class="button-group">
       <button type="submit" class="btn-primary" [disabled]="traineeForm.invalid">
         Update Trainee
       </button>
-      <button type="button" class="btn-secondary" routerLink="/traineelist">
+      <button type="button" class="btn-secondary" routerLink="/traineem/traineelist">
         Cancel
       </button>
     </div>
