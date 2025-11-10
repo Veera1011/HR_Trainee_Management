@@ -1,4 +1,4 @@
-<div class="dashboard-container">
+<div class="dashboard-container" *ngIf="isLoggedIn">
   <h1>HR Trainee Management Dashboard</h1>
   <p class="welcome-text">Welcome to the Trainee Management System</p>
 
@@ -129,5 +129,16 @@
   <div *ngIf="!loading && !metrics" class="error-state">
     <i class="fa fa-exclamation-circle"></i>
     <p>Unable to load dashboard data. Please try again later.</p>
+  </div>
+</div>
+
+<div class="welcome-screen" *ngIf="!isLoggedIn">
+  <div class="welcome-content">
+    <h1>Welcome to HR Trainee Management System</h1>
+    <p>Please login to access the dashboard and manage trainees</p>
+    <div class="welcome-actions">
+      <a routerLink="/login" class="btn-login">Login</a>
+      <a routerLink="/register" class="btn-register">Register</a>
+    </div>
   </div>
 </div>

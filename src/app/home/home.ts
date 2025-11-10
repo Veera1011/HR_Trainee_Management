@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TraineeService } from '../trainee/traineeservice';
+import { Authservice } from '../auth/authservice';
 
 @Component({
   selector: 'app-home',
@@ -10,11 +11,24 @@ import { TraineeService } from '../trainee/traineeservice';
 export class Home implements OnInit {
   metrics: any = null;
   loading: boolean = true;
+  isLoggedIn: boolean = false;
 
-  constructor(private traineeService: TraineeService) {}
+  constructor(
+    private traineeService: TraineeService,
+    private authService: Authservice
+  ) {}
 
   ngOnInit(): void {
-    this.loadDashboardMetrics();
+    this.checkLoginStatus();
+    if (this.isLoggedIn) {
+      this.loadDashboardMetrics();
+    } else {
+      this.loading = false;
+    }
+  }
+
+  checkLoginStatus(): void {
+    this.isLoggedIn = Boolean(this.authService.isloggedin());
   }
 
   loadDashboardMetrics(): void {

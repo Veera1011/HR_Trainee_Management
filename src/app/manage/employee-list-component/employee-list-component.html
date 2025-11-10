@@ -1,0 +1,61 @@
+  <div class="management-container">
+      <h2>Employee Management</h2>
+      
+      <button class="btn-add" (click)="showAddForm = !showAddForm">
+        <i class="fa fa-plus"></i> {{ showAddForm ? 'Cancel' : 'Add Employee' }}
+      </button>
+
+      <div class="form-container" *ngIf="showAddForm">
+        <form (ngSubmit)="addEmployee()">
+          <div class="form-group">
+            <label>Employee Name *</label>
+            <input type="text" [(ngModel)]="newEmployee.employeeName" name="employeeName" required>
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" [(ngModel)]="newEmployee.email" name="email" required>
+          </div>
+          <div class="form-group">
+            <label>Department</label>
+            <input type="text" [(ngModel)]="newEmployee.department" name="department">
+          </div>
+          <div class="form-group">
+            <label>Designation</label>
+            <input type="text" [(ngModel)]="newEmployee.designation" name="designation">
+          </div>
+          <button type="submit" class="btn-primary">Add Employee</button>
+        </form>
+      </div>
+
+      <div class="table-container">
+        <table *ngIf="employees.length > 0">
+          <thead>
+            <tr>
+              <th>Employee ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Department</th>
+              <th>Designation</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let emp of employees">
+              <td>{{ emp.employeeId }}</td>
+              <td>{{ emp.employeeName }}</td>
+              <td>{{ emp.email }}</td>
+              <td>{{ emp.department || 'N/A' }}</td>
+              <td>{{ emp.designation || 'N/A' }}</td>
+              <td>
+                <button class="btn-delete" (click)="deleteEmployee(emp.employeeId)">
+                  <i class="fa fa-trash"></i> Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="employees.length === 0" class="empty-state">
+          <p>No employees found</p>
+        </div>
+      </div>
+    </div>
